@@ -1,0 +1,17 @@
+@model AWE.Models.GoodsReceivedNote
+@{
+    ViewData["Title"] = "GRN Details";
+}
+<div class="container mt-4">
+    <h2>GRN: @Model.GRNNumber</h2>
+    <div class="card">
+        <div class="card-body">
+            <p><strong>Supplier ID:</strong> @Model.SupplierID</p>
+            <p><strong>Received Date:</strong> @Model.ReceivedDate.ToString("MMM dd, yyyy")</p>
+            <p><strong>Status:</strong> @Model.Status</p>
+            <p><strong>Notes:</strong> @(Model.Notes ?? "-")</p>
+            <hr />
+            <a href="@Url.Action("Index")" class="btn btn-secondary">Back</a>
+        </div>
+    </div>
+</div>

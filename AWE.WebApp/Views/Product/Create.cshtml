@@ -1,0 +1,133 @@
+@model AWE.Models.Product
+@{
+    ViewData["Title"] = "Create Product";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="bi bi-plus-circle"></i> Create New Product</h4>
+                </div>
+                <div class="card-body">
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger">
+                            <i class="bi bi-exclamation-triangle"></i> @ViewBag.Error
+                        </div>
+                    }
+
+                    <form method="post" asp-action="Create">
+                        @Html.AntiForgeryToken()
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5 class="mb-3 text-primary">Basic Information</h5>
+                                
+                                <div class="mb-3">
+                                    <label for="ProductName" class="form-label">Product Name <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="ProductName" name="ProductName" required />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="SKU" class="form-label">SKU</label>
+                                    <input type="text" class="form-control" id="SKU" name="SKU" placeholder="e.g., PROD-001" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="CategoryID" class="form-label">Category <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="CategoryID" name="CategoryID" required>
+                                        <option value="">-- Select Category --</option>
+                                        @if (ViewBag.Categories != null)
+                                        {
+                                            @foreach (var category in ViewBag.Categories)
+                                            {
+                                                @:<option value="@category.CategoryID">@category.CategoryName</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="SupplierID" class="form-label">Supplier <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="SupplierID" name="SupplierID" required>
+                                        <option value="">-- Select Supplier --</option>
+                                        @if (ViewBag.Suppliers != null)
+                                        {
+                                            @foreach (var supplier in ViewBag.Suppliers)
+                                            {
+                                                @:<option value="@supplier.SupplierID">@supplier.SupplierName</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="Description" class="form-label">Description</label>
+                                    <textarea class="form-control" id="Description" name="Description" rows="3"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <h5 class="mb-3 text-primary">Pricing & Inventory</h5>
+
+                                <div class="mb-3">
+                                    <label for="Price" class="form-label">Price (AUD) <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">$</span>
+                                        <input type="number" class="form-control" id="Price" name="Price" step="0.01" min="0" required />
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="StockQuantity" class="form-label">Stock Quantity <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" id="StockQuantity" name="StockQuantity" min="0" value="0" required />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="ReorderLevel" class="form-label">Reorder Level <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" id="ReorderLevel" name="ReorderLevel" min="0" value="10" required />
+                                    <small class="form-text text-muted">Alert when stock falls below this level</small>
+                                </div>
+
+                                <h5 class="mb-3 mt-4 text-primary">Additional Details</h5>
+
+                                <div class="mb-3">
+                                    <label for="ImageURL" class="form-label">Image URL</label>
+                                    <input type="text" class="form-control" id="ImageURL" name="ImageURL" placeholder="https://..." />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="Weight" class="form-label">Weight (kg)</label>
+                                    <input type="number" class="form-control" id="Weight" name="Weight" step="0.01" min="0" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="Dimensions" class="form-label">Dimensions</label>
+                                    <input type="text" class="form-control" id="Dimensions" name="Dimensions" placeholder="e.g., 30x20x10 cm" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="Warranty" class="form-label">Warranty</label>
+                                    <input type="text" class="form-control" id="Warranty" name="Warranty" placeholder="e.g., 2 years" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-4" />
+
+                        <div class="d-flex justify-content-between">
+                            <a href="@Url.Action("Index")" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle"></i> Create Product
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

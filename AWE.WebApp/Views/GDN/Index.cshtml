@@ -1,0 +1,43 @@
+@model IEnumerable<AWE.Models.GoodsDeliveryNote>
+@{
+    ViewData["Title"] = "Goods Delivery Notes";
+}
+<div class="container mt-4">
+    <h2><i class="bi bi-box-arrow-up"></i> Goods Delivery Notes (GDN)</h2>
+    <div class="card">
+        <div class="card-body p-0">
+            @if (Model != null && Model.Any())
+            {
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>GDN Number</th>
+                            <th>Delivery Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var gdn in Model)
+                        {
+                            <tr>
+                                <td><strong>@gdn.GDNNumber</strong></td>
+                                <td>@gdn.DeliveryDate.ToString("MMM dd, yyyy")</td>
+                                <td><span class="badge bg-secondary">@gdn.Status</span></td>
+                                <td>
+                                    <a href="@Url.Action("Details", new { id = gdn.GDNID })" class="btn btn-sm btn-outline-info">View</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="p-5 text-center text-muted">
+                    <p>No GDNs found.</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+@{
+    ViewData["Title"] = "Reports";
+    var reportType = ViewBag.ReportType as string ?? "LowStock";
+    var reportData = ViewBag.ReportData;
+    var reportTitle = ViewBag.ReportTitle as string ?? "Reports";
+}
+
+<div class="container mt-4">
+    <h2><i class="bi bi-graph-up"></i> Reports</h2>
+    
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="btn-group" role="group">
+                <a href="@Url.Action("Index", new { reportType = "LowStock" })" 
+                   class="btn @(reportType == "LowStock" ? "btn-primary" : "btn-outline-primary")">
+                    Low Stock
+                </a>
+                <a href="@Url.Action("Index", new { reportType = "OutOfStock" })" 
+                   class="btn @(reportType == "OutOfStock" ? "btn-primary" : "btn-outline-primary")">
+                    Out of Stock
+                </a>
+                <a href="@Url.Action("Index", new { reportType = "AllProducts" })" 
+                   class="btn @(reportType == "AllProducts" ? "btn-primary" : "btn-outline-primary")">
+                    All Products
+                </a>
+                <a href="@Url.Action("Index", new { reportType = "Orders" })" 
+                   class="btn @(reportType == "Orders" ? "btn-primary" : "btn-outline-primary")">
+                    Orders
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-info text-white">
+            <h5 class="mb-0">@reportTitle</h5>
+        </div>
+        <div class="card-body">
+            @if (reportData != null)
+            {
+                <p>Report data displayed here.</p>
+            }
+            else
+            {
+                <p class="text-muted">Select a report type above.</p>
+            }
+        </div>
+    </div>
+</div>

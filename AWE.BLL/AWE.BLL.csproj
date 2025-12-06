@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AWE.Models\AWE.Models.csproj" />
+    <ProjectReference Include="..\AWE.DAL\AWE.DAL.csproj" />
+  </ItemGroup>
+</Project>

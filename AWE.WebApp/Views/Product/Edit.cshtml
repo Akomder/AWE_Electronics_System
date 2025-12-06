@@ -1,0 +1,150 @@
+@model AWE.Models.Product
+@{
+    ViewData["Title"] = "Edit Product";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <div class="card shadow-sm">
+                <div class="card-header bg-warning">
+                    <h4 class="mb-0"><i class="bi bi-pencil"></i> Edit Product</h4>
+                </div>
+                <div class="card-body">
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger">
+                            <i class="bi bi-exclamation-triangle"></i> @ViewBag.Error
+                        </div>
+                    }
+
+                    <form method="post" asp-action="Edit" asp-route-id="@Model.ProductID">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="ProductID" value="@Model.ProductID" />
+                        <input type="hidden" name="CreatedDate" value="@Model.CreatedDate" />
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5 class="mb-3 text-warning">Basic Information</h5>
+                                
+                                <div class="mb-3">
+                                    <label for="ProductName" class="form-label">Product Name <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="ProductName" name="ProductName" value="@Model.ProductName" required />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="SKU" class="form-label">SKU</label>
+                                    <input type="text" class="form-control" id="SKU" name="SKU" value="@Model.SKU" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="CategoryID" class="form-label">Category <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="CategoryID" name="CategoryID" required>
+                                        @if (ViewBag.Categories != null)
+                                        {
+                                            @foreach (var category in ViewBag.Categories)
+                                            {
+                                                @:<option value="@category.CategoryID" selected="@(category.CategoryID == Model.CategoryID ? "selected" : null)">@category.CategoryName</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="SupplierID" class="form-label">Supplier <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="SupplierID" name="SupplierID" required>
+                                        @if (ViewBag.Suppliers != null)
+                                        {
+                                            @foreach (var supplier in ViewBag.Suppliers)
+                                            {
+                                                @:<option value="@supplier.SupplierID" selected="@(supplier.SupplierID == Model.SupplierID ? "selected" : null)">@supplier.SupplierName</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="Description" class="form-label">Description</label>
+                                    <textarea class="form-control" id="Description" name="Description" rows="3">@Model.Description</textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="IsActive" name="IsActive" value="true" @(Model.IsActive ? "checked" : "") />
+                                        <label class="form-check-label" for="IsActive">
+                                            Active Product
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <h5 class="mb-3 text-warning">Pricing & Inventory</h5>
+
+                                <div class="mb-3">
+                                    <label for="Price" class="form-label">Price (AUD) <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">$</span>
+                                        <input type="number" class="form-control" id="Price" name="Price" step="0.01" min="0" value="@Model.Price" required />
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="StockQuantity" class="form-label">Stock Quantity <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" id="StockQuantity" name="StockQuantity" min="0" value="@Model.StockQuantity" required />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="ReorderLevel" class="form-label">Reorder Level <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" id="ReorderLevel" name="ReorderLevel" min="0" value="@Model.ReorderLevel" required />
+                                </div>
+
+                                <h5 class="mb-3 mt-4 text-warning">Additional Details</h5>
+
+                                <div class="mb-3">
+                                    <label for="ImageURL" class="form-label">Image URL</label>
+                                    <input type="text" class="form-control" id="ImageURL" name="ImageURL" value="@Model.ImageURL" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="Weight" class="form-label">Weight (kg)</label>
+                                    <input type="number" class="form-control" id="Weight" name="Weight" step="0.01" min="0" value="@Model.Weight" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="Dimensions" class="form-label">Dimensions</label>
+                                    <input type="text" class="form-control" id="Dimensions" name="Dimensions" value="@Model.Dimensions" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="Warranty" class="form-label">Warranty</label>
+                                    <input type="text" class="form-control" id="Warranty" name="Warranty" value="@Model.Warranty" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-4" />
+
+                        <div class="d-flex justify-content-between">
+                            <a href="@Url.Action("Index")" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Cancel
+                            </a>
+                            <button type="submit" class="btn btn-warning">
+                                <i class="bi bi-check-circle"></i> Update Product
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card mt-3 shadow-sm">
+                <div class="card-body">
+                    <small class="text-muted">
+                        <strong>Created:</strong> @Model.CreatedDate.ToString("yyyy-MM-dd HH:mm") | 
+                        <strong>Last Updated:</strong> @Model.LastUpdated.ToString("yyyy-MM-dd HH:mm")
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

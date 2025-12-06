@@ -1,0 +1,42 @@
+@model AWE.Models.Category
+
+@{
+    ViewData["Title"] = "Category Details";
+}
+
+<div class="container mt-4">
+    <h2><i class="bi bi-info-circle"></i> Category Details</h2>
+    
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">Category ID:</dt>
+                <dd class="col-sm-9">@Model.CategoryID</dd>
+
+                <dt class="col-sm-3">Name:</dt>
+                <dd class="col-sm-9">@Model.CategoryName</dd>
+
+                <dt class="col-sm-3">Description:</dt>
+                <dd class="col-sm-9">@(Model.Description ?? "-")</dd>
+
+                <dt class="col-sm-3">Status:</dt>
+                <dd class="col-sm-9">
+                    @if (Model.IsActive)
+                    {
+                        <span class="badge bg-success">Active</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Inactive</span>
+                    }
+                </dd>
+            </dl>
+
+            <hr />
+            <div class="d-flex justify-content-between">
+                <a href="@Url.Action("Index")" class="btn btn-secondary">Back to List</a>
+                <a href="@Url.Action("Edit", new { id = Model.CategoryID })" class="btn btn-primary">Edit</a>
+            </div>
+        </div>
+    </div>
+</div>

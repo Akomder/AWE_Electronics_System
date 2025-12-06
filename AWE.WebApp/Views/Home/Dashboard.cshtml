@@ -1,0 +1,25 @@
+@* This is a simplified placeholder for the ASP.NET Core MVC Dashboard View *@
+@{
+    ViewData["Title"] = "Agent Dashboard";
+}
+
+<h1>Agent Dashboard</h1>
+
+@if (ViewBag.Message != null)
+{
+    <div style="color: green;">@ViewBag.Message</div>
+}
+
+<h2>Implemented Features (Placeholder)</h2>
+<p>This application demonstrates the connection to the shared BLL/DAL layers.</p>
+
+<ul>
+    @foreach (var feature in ViewBag.Features)
+    {
+        <li>@feature</li>
+    }
+</ul>
+
+<p>
+    <a href="/Account/Logout">Logout</a>
+</p>
