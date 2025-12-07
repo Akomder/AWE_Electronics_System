@@ -1,0 +1,108 @@
+@* Data Table Header Component - Reusable search and filter bar *@
+
+<div class="card shadow-sm mb-3 fade-in">
+    <div class="card-body">
+        <div class="row g-2">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-end">
+                        <i class="bi bi-search text-muted"></i>
+                    </span>
+                    <input type="text" 
+                           class="form-control" 
+                           id="searchInput" 
+                           placeholder="Search..." 
+                           aria-label="Search" />
+                </div>
+            </div>
+            <div class="col-md-6 d-flex gap-2">
+                <select class="form-select" id="filterSelect" aria-label="Filter by">
+                    <option value="">All Items</option>
+                    @if (ViewBag.FilterOptions != null)
+                    {
+                        @foreach (var option in ViewBag.FilterOptions)
+                        {
+                            <option value="@option">@option</option>
+                        }
+                    }
+                </select>
+                <button class="btn btn-outline-primary" id="searchBtn">
+                    <i class="bi bi-funnel"></i> Filter
+                </button>
+                <button class="btn btn-outline-secondary" id="resetBtn">
+                    <i class="bi bi-arrow-clockwise"></i> Reset
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('searchInput');
+        const filterSelect = document.getElementById('filterSelect');
+        const searchBtn = document.getElementById('searchBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const table = document.querySelector('table');
+
+        if (!table) return;
+
+        // Search functionality
+        if (searchBtn) {
+            searchBtn.addEventListener('click', function() {
+                filterTable();
+            });
+        }
+
+        // Reset functionality
+        if (resetBtn) {
+            resetBtn.addEventListener('click', function() {
+                if (searchInput) searchInput.value = '';
+                if (filterSelect) filterSelect.value = '';
+                filterTable();
+            });
+        }
+
+        // Enter key to search
+        if (searchInput) {
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    filterTable();
+                }
+            });
+        }
+
+        function filterTable() {
+            const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+            const filterTerm = filterSelect ? filterSelect.value : '';
+            const rows = table.querySelectorAll('tbody tr');
+
+            let visibleCount = 0;
+            rows.forEach(row => {
+                let visible = true;
+
+                // Search filter
+                if (searchTerm && !row.textContent.toLowerCase().includes(searchTerm)) {
+                    visible = false;
+                }
+
+                // Category filter
+                if (filterTerm) {
+                    const firstCell = row.querySelector('td:first-child');
+                    if (firstCell && !firstCell.textContent.includes(filterTerm)) {
+                        visible = false;
+                    }
+                }
+
+                row.style.display = visible ? '' : 'none';
+                if (visible) visibleCount++;
+            });
+
+            // Show no results message
+            const noResults = document.querySelector('.no-results');
+            if (noResults) {
+                noResults.style.display = visibleCount === 0 ? '' : 'none';
+            }
+        }
+    });
+</script>

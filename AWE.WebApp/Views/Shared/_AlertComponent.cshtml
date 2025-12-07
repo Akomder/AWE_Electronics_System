@@ -1,0 +1,20 @@
+@* Alert Component - Reusable notification component *@
+@{
+    var alertType = ViewBag.AlertType ?? "info"; // success, warning, danger, info
+    var message = ViewBag.Message ?? "";
+    var icon = ViewBag.Icon ?? "bi-info-circle";
+}
+
+@if (!string.IsNullOrEmpty(message))
+{
+    <div class="alert alert-@alertType fade-in" role="alert">
+        <i class="bi @icon"></i>
+        <div>
+            @if (!string.IsNullOrEmpty(ViewBag.Title))
+            {
+                <strong class="alert-heading">@ViewBag.Title</strong>
+            }
+            @Html.Raw(message)
+        </div>
+    </div>
+}

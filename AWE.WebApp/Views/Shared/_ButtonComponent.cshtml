@@ -1,0 +1,31 @@
+@* Button Component - Reusable button with various styles *@
+@{
+    var text = ViewBag.Text ?? "Button";
+    var icon = ViewBag.Icon ?? "";
+    var btnClass = ViewBag.BtnClass ?? "btn-primary"; // btn-primary, btn-success, btn-danger, etc.
+    var size = ViewBag.Size ?? ""; // btn-sm, btn-lg
+    var href = ViewBag.Href ?? "#";
+    var onClick = ViewBag.OnClick ?? "";
+    var title = ViewBag.Title ?? "";
+}
+
+@if (string.IsNullOrEmpty(href) || href == "#")
+{
+    <button class="btn @btnClass @size" @(string.IsNullOrEmpty(onClick) ? "" : $"onclick='{onClick}'") @(string.IsNullOrEmpty(title) ? "" : $"title='{title}'")>
+        @if (!string.IsNullOrEmpty(icon))
+        {
+            <i class="bi @icon"></i>
+        }
+        @text
+    </button>
+}
+else
+{
+    <a href="@href" class="btn @btnClass @size" @(string.IsNullOrEmpty(title) ? "" : $"title='{title}'")>
+        @if (!string.IsNullOrEmpty(icon))
+        {
+            <i class="bi @icon"></i>
+        }
+        @text
+    </a>
+}

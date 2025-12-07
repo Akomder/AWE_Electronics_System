@@ -1,0 +1,26 @@
+@* Stat Card Component - Dashboard statistics display *@
+@{
+    var title = ViewBag.Title ?? "Metric";
+    var value = ViewBag.Value ?? "0";
+    var subtitle = ViewBag.Subtitle ?? "";
+    var icon = ViewBag.Icon ?? "bi-box-seam";
+    var bgColor = ViewBag.BgColor ?? "bg-primary"; // bg-primary, bg-success, bg-warning, bg-danger
+}
+
+<div class="col-md-3 mb-3">
+    <div class="card stat-card @bgColor text-white h-100 shadow-sm">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <p class="stat-label mb-0">@title</p>
+                    <h2 class="stat-value">@value</h2>
+                    @if (!string.IsNullOrEmpty(subtitle))
+                    {
+                        <p class="stat-change mb-0">@subtitle</p>
+                    }
+                </div>
+                <i class="bi @icon" style="font-size: 3rem; opacity: 0.3;"></i>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+@* Form Field Component - Reusable form field with label and validation *@
+@{
+    var fieldName = ViewBag.FieldName ?? "";
+    var fieldLabel = ViewBag.FieldLabel ?? fieldName;
+    var fieldType = ViewBag.FieldType ?? "text"; // text, email, password, number, etc.
+    var placeholder = ViewBag.Placeholder ?? "";
+    var required = ViewBag.Required ?? false;
+    var helpText = ViewBag.HelpText ?? "";
+    var value = ViewBag.Value ?? "";
+    var errorMessage = ViewBag.ErrorMessage ?? "";
+}
+
+<div class="form-group mb-3">
+    <label for="@fieldName" class="form-label fw-600">
+        @fieldLabel
+        @if (required)
+        {
+            <span class="text-danger">*</span>
+        }
+    </label>
+    
+    <input type="@fieldType" 
+           class="form-control @(!string.IsNullOrEmpty(errorMessage) ? "is-invalid" : "")" 
+           id="@fieldName" 
+           name="@fieldName" 
+           placeholder="@placeholder" 
+           value="@value"
+           @(required ? "required" : "") />
+    
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <div class="invalid-feedback d-block">
+            <i class="bi bi-exclamation-triangle"></i> @errorMessage
+        </div>
+    }
+    
+    @if (!string.IsNullOrEmpty(helpText))
+    {
+        <small class="form-text text-muted d-block mt-1">
+            <i class="bi bi-info-circle"></i> @helpText
+        </small>
+    }
+</div>

@@ -1,5 +1,4 @@
-#nullable disable
-using System;
+﻿using System;
 using System.Windows.Forms;
 using AWE.BLL;
 using AWE.Models;
@@ -12,136 +11,170 @@ namespace AWE.DesktopApp
         private TextBox txtUsername;
         private TextBox txtPassword;
         private Button btnLogin;
-        private Label lblTitle;
-        private Label lblUsername;
-        private Label lblPassword;
-        private LinkLabel lnkForgotPassword;
-        private LinkLabel lnkResetPassword;
+        private Button btnRegister;
+        private Button btnForgotPassword;
         private Label lblStatus;
+        private CheckBox chkShowPassword;
 
         public LoginForm()
         {
-            InitializeComponent();
+            InitializeComponent(); // Assume this is implemented by the designer
         }
 
         private void InitializeComponent()
         {
-            lblTitle = new Label();
-            lblUsername = new Label();
-            txtUsername = new TextBox();
-            lblPassword = new Label();
-            txtPassword = new TextBox();
-            btnLogin = new Button();
-            lblStatus = new Label();
-            lnkForgotPassword = new LinkLabel();
-            lnkResetPassword = new LinkLabel();
-            SuspendLayout();
-            // 
-            // lblTitle
-            // 
-            lblTitle.Location = new System.Drawing.Point(0, 0);
-            lblTitle.Name = "lblTitle";
-            lblTitle.Size = new System.Drawing.Size(100, 23);
-            lblTitle.TabIndex = 0;
-            // 
-            // lblUsername
-            // 
-            lblUsername.Location = new System.Drawing.Point(0, 0);
-            lblUsername.Name = "lblUsername";
-            lblUsername.Size = new System.Drawing.Size(100, 23);
-            lblUsername.TabIndex = 1;
-            // 
-            // txtUsername
-            // 
-            txtUsername.Location = new System.Drawing.Point(0, 0);
-            txtUsername.Name = "txtUsername";
-            txtUsername.Size = new System.Drawing.Size(100, 27);
-            txtUsername.TabIndex = 2;
-            // 
-            // lblPassword
-            // 
-            lblPassword.Location = new System.Drawing.Point(0, 0);
-            lblPassword.Name = "lblPassword";
-            lblPassword.Size = new System.Drawing.Size(100, 23);
-            lblPassword.TabIndex = 3;
-            // 
-            // txtPassword
-            // 
-            txtPassword.Location = new System.Drawing.Point(0, 0);
-            txtPassword.Name = "txtPassword";
-            txtPassword.Size = new System.Drawing.Size(100, 27);
-            txtPassword.TabIndex = 4;
-            // 
-            // btnLogin
-            // 
-            btnLogin.Location = new System.Drawing.Point(0, 0);
-            btnLogin.Name = "btnLogin";
-            btnLogin.Size = new System.Drawing.Size(75, 23);
-            btnLogin.TabIndex = 5;
-            btnLogin.Click += BtnLogin_Click;
-            // 
-            // lblStatus
-            // 
-            lblStatus.Location = new System.Drawing.Point(0, 0);
-            lblStatus.Name = "lblStatus";
-            lblStatus.Size = new System.Drawing.Size(100, 23);
-            lblStatus.TabIndex = 6;
-            // 
-            // lnkForgotPassword
-            // 
-            lnkForgotPassword.Location = new System.Drawing.Point(0, 0);
-            lnkForgotPassword.Name = "lnkForgotPassword";
-            lnkForgotPassword.Size = new System.Drawing.Size(100, 23);
-            lnkForgotPassword.TabIndex = 7;
-            lnkForgotPassword.LinkClicked += LnkForgotPassword_LinkClicked;
-            // 
-            // lnkResetPassword
-            // 
-            lnkResetPassword.Location = new System.Drawing.Point(0, 0);
-            lnkResetPassword.Name = "lnkResetPassword";
-            lnkResetPassword.Size = new System.Drawing.Size(100, 23);
-            lnkResetPassword.TabIndex = 8;
-            lnkResetPassword.LinkClicked += LnkResetPassword_LinkClicked;
-            // 
-            // LoginForm
-            // 
-            AcceptButton = btnLogin;
-            ClientSize = new System.Drawing.Size(1153, 593);
-            Controls.Add(lblTitle);
-            Controls.Add(lblUsername);
-            Controls.Add(txtUsername);
-            Controls.Add(lblPassword);
-            Controls.Add(txtPassword);
-            Controls.Add(btnLogin);
-            Controls.Add(lblStatus);
-            Controls.Add(lnkForgotPassword);
-            Controls.Add(lnkResetPassword);
-            FormBorderStyle = FormBorderStyle.FixedDialog;
-            MaximizeBox = false;
-            Name = "LoginForm";
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "AWE Electronics - Staff Login";
-            ResumeLayout(false);
-            PerformLayout();
+            this.Text = "AWE Electronics Staff Login";
+            this.Size = new System.Drawing.Size(450, 450);
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+
+            // Title Label
+            Label lblTitle = new Label
+            {
+                Text = "AWE Electronics",
+                Location = new System.Drawing.Point(50, 30),
+                Size = new System.Drawing.Size(350, 40),
+                Font = new System.Drawing.Font("Arial", 18, System.Drawing.FontStyle.Bold),
+                TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+            };
+
+            // Subtitle Label
+            Label lblSubtitle = new Label
+            {
+                Text = "Staff Login Portal",
+                Location = new System.Drawing.Point(50, 75),
+                Size = new System.Drawing.Size(350, 20),
+                Font = new System.Drawing.Font("Arial", 12, System.Drawing.FontStyle.Italic),
+                TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
+                ForeColor = System.Drawing.Color.Gray
+            };
+
+            // Username Label and TextBox
+            Label lblUsername = new Label
+            {
+                Text = "Username:",
+                Location = new System.Drawing.Point(50, 120),
+                Size = new System.Drawing.Size(100, 20)
+            };
+            this.txtUsername = new TextBox
+            {
+                Location = new System.Drawing.Point(160, 120),
+                Width = 240,
+                Name = "txtUsername"
+            };
+
+            // Password Label and TextBox
+            Label lblPassword = new Label
+            {
+                Text = "Password:",
+                Location = new System.Drawing.Point(50, 160),
+                Size = new System.Drawing.Size(100, 20)
+            };
+            this.txtPassword = new TextBox
+            {
+                Location = new System.Drawing.Point(160, 160),
+                Width = 240,
+                PasswordChar = '●',
+                Name = "txtPassword"
+            };
+
+            // Show Password Checkbox
+            this.chkShowPassword = new CheckBox
+            {
+                Text = "Show Password",
+                Location = new System.Drawing.Point(160, 190),
+                AutoSize = true
+            };
+            this.chkShowPassword.CheckedChanged += ChkShowPassword_CheckedChanged;
+
+            // Login Button
+            this.btnLogin = new Button
+            {
+                Text = "Login",
+                Location = new System.Drawing.Point(160, 230),
+                Size = new System.Drawing.Size(100, 35),
+                BackColor = System.Drawing.Color.FromArgb(0, 120, 215),
+                ForeColor = System.Drawing.Color.White,
+                FlatStyle = FlatStyle.Flat
+            };
+            this.btnLogin.Click += BtnLogin_Click;
+
+            // Register Button
+            this.btnRegister = new Button
+            {
+                Text = "Register New Account",
+                Location = new System.Drawing.Point(160, 275),
+                Size = new System.Drawing.Size(240, 30),
+                BackColor = System.Drawing.Color.FromArgb(76, 175, 80),
+                ForeColor = System.Drawing.Color.White,
+                FlatStyle = FlatStyle.Flat
+            };
+            this.btnRegister.Click += BtnRegister_Click;
+
+            // Forgot Password Button
+            this.btnForgotPassword = new Button
+            {
+                Text = "Forgot Password?",
+                Location = new System.Drawing.Point(160, 310),
+                Size = new System.Drawing.Size(240, 30),
+                BackColor = System.Drawing.Color.FromArgb(255, 152, 0),
+                ForeColor = System.Drawing.Color.White,
+                FlatStyle = FlatStyle.Flat
+            };
+            this.btnForgotPassword.Click += BtnForgotPassword_Click;
+
+            // Status Label
+            this.lblStatus = new Label
+            {
+                Location = new System.Drawing.Point(50, 350),
+                Size = new System.Drawing.Size(350, 50),
+                ForeColor = System.Drawing.Color.Red,
+                TextAlign = System.Drawing.ContentAlignment.TopCenter,
+                Text = ""
+            };
+
+            this.Controls.Add(lblTitle);
+            this.Controls.Add(lblSubtitle);
+            this.Controls.Add(lblUsername);
+            this.Controls.Add(this.txtUsername);
+            this.Controls.Add(lblPassword);
+            this.Controls.Add(this.txtPassword);
+            this.Controls.Add(this.chkShowPassword);
+            this.Controls.Add(this.btnLogin);
+            this.Controls.Add(this.btnRegister);
+            this.Controls.Add(this.btnForgotPassword);
+            this.Controls.Add(this.lblStatus);
+
+            // Set Accept button
+            this.AcceptButton = this.btnLogin;
+        }
+
+        private void ChkShowPassword_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkShowPassword.Checked)
+            {
+                txtPassword.PasswordChar = '\0';
+            }
+            else
+            {
+                txtPassword.PasswordChar = '●';
+            }
         }
 
         private void BtnLogin_Click(object sender, EventArgs e)
         {
-            string username = txtUsername.Text.Trim();
-            string password = txtPassword.Text;
-
-            // Clear previous status
             lblStatus.Text = "";
+            lblStatus.ForeColor = System.Drawing.Color.Red;
 
-            // Validate input
-            if (string.IsNullOrWhiteSpace(username))
+            if (string.IsNullOrWhiteSpace(txtUsername.Text))
             {
                 lblStatus.Text = "Please enter your username.";
                 txtUsername.Focus();
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(password))
+            if (string.IsNullOrWhiteSpace(txtPassword.Text))
             {
                 lblStatus.Text = "Please enter your password.";
                 txtPassword.Focus();
@@ -150,52 +183,41 @@ namespace AWE.DesktopApp
 
             try
             {
-                // Disable login button to prevent multiple clicks
                 btnLogin.Enabled = false;
-                lblStatus.Text = "Authenticating...";
+                lblStatus.Text = "Logging in...";
                 lblStatus.ForeColor = System.Drawing.Color.Blue;
                 Application.DoEvents();
 
-                // Authenticate user
-                User user = _userManager.Login(username, password);
+                User user = _userManager.Login(txtUsername.Text, txtPassword.Text);
 
                 if (user != null)
                 {
-                    // Login successful
+                    lblStatus.Text = "Login successful!";
+                    lblStatus.ForeColor = System.Drawing.Color.Green;
+
                     MessageBox.Show(
-                        $"Welcome, {user.FirstName} {user.LastName}!\n\nRole: {user.Role}",
-                        "Login Successful",
+                        $"Login Successful!\n\nWelcome, {user.FirstName} {user.LastName} ({user.Role}).",
+                        "Success",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Information
                     );
 
-                    // Hide login form and open main application
+                    // Close login form and open main application form (e.g., MainForm)
                     this.Hide();
                     MainForm mainForm = new MainForm(user);
                     mainForm.ShowDialog();
-
-                    // Close the application when main form is closed
                     this.Close();
                 }
                 else
                 {
-                    // Login failed
-                    lblStatus.ForeColor = System.Drawing.Color.Red;
                     lblStatus.Text = "Invalid username or password.";
-                    txtPassword.Clear();
-                    txtPassword.Focus();
+                    lblStatus.ForeColor = System.Drawing.Color.Red;
                 }
             }
             catch (Exception ex)
             {
+                lblStatus.Text = "Login error: " + ex.Message;
                 lblStatus.ForeColor = System.Drawing.Color.Red;
-                lblStatus.Text = "Login error. Please try again.";
-                MessageBox.Show(
-                    $"An error occurred during login:\n{ex.Message}",
-                    "Login Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
             }
             finally
             {
@@ -203,18 +225,30 @@ namespace AWE.DesktopApp
             }
         }
 
-        private void LnkForgotPassword_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void BtnRegister_Click(object sender, EventArgs e)
         {
-            // Open password reset request form
-            PasswordResetRequestForm resetRequestForm = new PasswordResetRequestForm();
-            resetRequestForm.ShowDialog();
+            using (UserRegistrationForm registerForm = new UserRegistrationForm())
+            {
+                registerForm.ShowDialog(this);
+            }
         }
 
-        private void LnkResetPassword_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void BtnForgotPassword_Click(object sender, EventArgs e)
         {
-            // Open password reset form
-            PasswordResetForm resetForm = new PasswordResetForm();
-            resetForm.ShowDialog();
+            // First show the request form to get a token
+            using (PasswordResetRequestForm requestForm = new PasswordResetRequestForm())
+            {
+                DialogResult result = requestForm.ShowDialog(this);
+                
+                // If user closed the form, offer to reset with token
+                if (result == DialogResult.OK)
+                {
+                    using (PasswordResetForm resetForm = new PasswordResetForm())
+                    {
+                        resetForm.ShowDialog(this);
+                    }
+                }
+            }
         }
     }
 }

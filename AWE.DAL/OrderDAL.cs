@@ -12,7 +12,7 @@ namespace AWE.DAL
         // --- CREATE ---
         public int Insert(Order entity)
         {
-            string sql = @"INSERT INTO Orders (CustomerID, AgentID, OrderDate, Status, TotalAmount, 
+            string sql = @"INSERT INTO Orders (CustomerID, AgentID, OrderDate, OrderStatus, TotalAmount, 
                           ShippingAddress, ShippingCity, ShippingState, ShippingPostalCode, 
                           PaymentMethod, PaymentStatus, Notes) 
                           VALUES (@CustomerID, @AgentID, @OrderDate, @Status, @TotalAmount,
@@ -55,7 +55,7 @@ namespace AWE.DAL
 
         public List<Order> GetByStatus(string status)
         {
-            string sql = "SELECT * FROM Orders WHERE Status = @Status ORDER BY OrderDate DESC";
+            string sql = "SELECT * FROM Orders WHERE OrderStatus = @Status ORDER BY OrderDate DESC";
             var parameters = new SqlParameter[] { new SqlParameter("@Status", status) };
             DataTable dt = DbHelper.ExecuteReader(sql, parameters);
             
@@ -85,12 +85,11 @@ namespace AWE.DAL
         public int Update(Order entity)
         {
             string sql = @"UPDATE Orders 
-                          SET CustomerID = @CustomerID, AgentID = @AgentID, Status = @Status,
+                          SET CustomerID = @CustomerID, AgentID = @AgentID, OrderStatus = @Status,
                               TotalAmount = @TotalAmount, ShippingAddress = @ShippingAddress,
                               ShippingCity = @ShippingCity, ShippingState = @ShippingState,
                               ShippingPostalCode = @ShippingPostalCode, PaymentMethod = @PaymentMethod,
-                              PaymentStatus = @PaymentStatus, ShippedDate = @ShippedDate,
-                              DeliveredDate = @DeliveredDate, Notes = @Notes
+                              PaymentStatus = @PaymentStatus, Notes = @Notes
                           WHERE OrderID = @OrderID";
             
             var parameters = GetSqlParameters(entity);
@@ -101,7 +100,7 @@ namespace AWE.DAL
 
         public int UpdateStatus(int orderId, string status)
         {
-            string sql = "UPDATE Orders SET Status = @Status WHERE OrderID = @OrderID";
+            string sql = "UPDATE Orders SET OrderStatus = @Status WHERE OrderID = @OrderID";
             var parameters = new SqlParameter[] 
             { 
                 new SqlParameter("@Status", status),
@@ -127,7 +126,7 @@ namespace AWE.DAL
                 CustomerID = Convert.ToInt32(row["CustomerID"]),
                 AgentID = row["AgentID"] != DBNull.Value ? (int?)Convert.ToInt32(row["AgentID"]) : null,
                 OrderDate = Convert.ToDateTime(row["OrderDate"]),
-                Status = row["Status"].ToString(),
+                Status = row["OrderStatus"].ToString(),
                 TotalAmount = Convert.ToDecimal(row["TotalAmount"]),
                 ShippingAddress = row["ShippingAddress"] != DBNull.Value ? row["ShippingAddress"].ToString() : null,
                 ShippingCity = row["ShippingCity"] != DBNull.Value ? row["ShippingCity"].ToString() : null,

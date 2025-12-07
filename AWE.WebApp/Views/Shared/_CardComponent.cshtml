@@ -1,0 +1,27 @@
+@* Card Component - Reusable card wrapper *@
+@{
+    var title = ViewBag.Title ?? "";
+    var subtitle = ViewBag.Subtitle ?? "";
+    var icon = ViewBag.Icon ?? "";
+    var cardClass = ViewBag.CardClass ?? "";
+}
+
+<div class="card @cardClass fade-in">
+    @if (!string.IsNullOrEmpty(title))
+    {
+        <div class="card-header">
+            @if (!string.IsNullOrEmpty(icon))
+            {
+                <i class="bi @icon"></i>
+            }
+            @title
+            @if (!string.IsNullOrEmpty(subtitle))
+            {
+                <small class="text-white-50">@subtitle</small>
+            }
+        </div>
+    }
+    <div class="card-body">
+        @RenderBody()
+    </div>
+</div>
